@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Where in Rome</title>
+        <meta name="description" content="Test your knowledge of the Eternal City by placing Ancient Roman landmarks on a modern map" />
+        <link rel="author" href="http://cs.brown.edu/~nmalkin/" />
+        <link rel="stylesheet" href="lib/bootstrap.css" />
+        <link rel="stylesheet" href="lib/leaflet.css" />
+        <link rel="stylesheet" href="rome.css" />
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a href="" class="brand">Where in Rome</a>
+                <ul class="nav">
+                    <li><a id="nav-text">
+                    Can you find Ancient Roman landmarks on this modern map of Rome?
+                    </a></li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li><a href="https://github.com/nmalkin/rome">Source code</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <noscript>You will need JavaScript for this application to work.</noscript>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span9">
+                    <div id="map"></div>
+                </div>
+                <div id="sidebar" class="span3">
+                </div>
+            </div>
+        </div>
+
+        <script src="lib/leaflet.js"></script>
+        <script src="lib/jquery.js"></script>
+        <script src="lib/handlebars.js"></script>
+
+        <script src="data/geodata.js"></script>
+        <script src="data/metadata.js"></script>
+
+
+<script id="template-welcome" type="text/x-handlebars-template">
+<p class="lead">Test your knowledge of the Eternal City by placing Ancient Roman landmarks on a modern map</p>
+
+<h4>Instructions</h4>
+<ol>
+    <li>You will be given a description of a building, monument, or location in Ancient Rome.</li>
+    <li>Find the place on the map where you think it was (or still is!) located.</li>
+    <li>Then <b>double-click to make your guess</b>. <br />
+        You can drag the marker to adjust its location.</li>
+    <li>Try to minimize how far off you are from the true location.</li>
+    <li>Repeat steps 1-4 for a total of three rounds.</li>
+    <li><b>The lower your score, the better you're doing!</b></li>
+    {{#if returning}}
+    <li>See if you can beat your best score of <b>{{points}}</b> points.</li>
+    {{/if}}
+</ol>
+
+<p style="margin-top: 25px"><input id="begin" type="button" class="btn btn-primary btn-large" value="Let's get started!"></p>
+
+<div class="alert alert-info" style="margin-top: 40px">
+    Note: most of the images used here are from the
+    <a href="http://dlib.etc.ucla.edu/projects/Forum/">Digital Forum Project</a>.
+</div>
+
+</script>
+
+<script id="template-place" type="text/x-handlebars-template">
+<h4>{{Name}}</h4>
+{{#if image}}
+<p><img src="places/{{image}}" alt="{{Name}}" class="illustration img-polaroid"/></p>
+{{/if}}
+<p>{{{description}}}</p>
+</script>
+
+<script id="template-results" type="text/x-handlebars-template">
+{{#if exact}}
+<h3>Spot on!</h3>
+<p>You got the location of the {{place}} exactly right.</p>
+{{else}}
+    {{#if close}}
+        <h3>Almost there!</h3>
+        <p>You were off by just a bit.</p>
+    {{else}}
+        <h3>Not quite!</h3>
+        <p>You were off by {{distance}} meters.</p>
+    {{/if}}
+{{/if}}
+
+<p><b>Total deviation:</b> {{total}}</p>
+
+
+<p style="margin-top: 25px"><input id="continue" type="button" class="btn btn-primary" value="{{#if last}}Finish{{else}}Continue{{/if}}"></p>
+</script>
+
+<script id="template-finish" type="text/x-handlebars-template">
+<h3>{{acknowledgment}}</h3>
+<p>Your final score is: <b>{{total}}</b></p>
+
+{{#if returning}}
+    {{#if improved}}
+        <p>Well done, you! You beat your previous score of {{previous}}.</p>
+    {{else}}
+        <p>Your best score is {{previous}}.</p>
+    {{/if}}
+{{/if}}
+
+<p>You can play again or click on each of the landmarks to see their descriptions again.</p>
+
+<p style="margin-top: 25px"><input id="repeat" type="button" class="btn" value="Play again"></p>
+</script>
+
+
+        <script src="main.js"></script>
+    </body>
+
+</html>

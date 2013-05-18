@@ -1,0 +1,38 @@
+body {
+    overflow: hidden;
+}
+.navbar {
+    margin-bottom: 0;
+}
+#nav-text {
+    color: inherit;
+}
+#points li:hover {
+    background-color: rgb(238, 238, 238);
+    cursor: pointer;
+}
+#map {
+    opacity: 0.3;
+    transition-property: opacity;
+    transition-duration: 3s;
+}
+#sidebar {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    padding-right: 5px;
+}
+#sidebar p {
+    text-align: justify;
+}
+#sidebar p:first-child {
+    margin-top: 25px;
+}
+#sidebar img.illustration {
+    max-width: 95%;
+}
+#sidebar a.reference {
+    margin-top: 15px;
+    float: right;
+    font-style: italic;
+}
